@@ -5,7 +5,7 @@ import { createPageUrl } from "@/utils";
 import { User } from "@/api/entities";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileScan, LogOut, LogIn, Menu, X, Building } from "lucide-react";
-import Footer from "./components/Footer";
+import Footer from "../components/Footer";
 
 export default function Layout({ children }) {
   const [user, setUser] = useState(null);
