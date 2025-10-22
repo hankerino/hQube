@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://hqube-backend.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://hqube-backend.onrender.com';
 
 export const api = {
   async sendEmail(data) {
@@ -7,6 +7,9 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
+    if (!response.ok) {
+      throw new Error(`Email failed: ${response.statusText}`);
+    }
     return response.json();
   },
 
@@ -16,6 +19,9 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
+    if (!response.ok) {
+      throw new Error(`LLM failed: ${response.statusText}`);
+    }
     return response.json();
   }
 };
