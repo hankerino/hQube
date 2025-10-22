@@ -34,7 +34,7 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <Link to={createPageUrl("Home")} className="flex items-center space-x-3 mb-4">
               <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/3f7553f52_correct_hqube_llc_logo.jpeg" 
+                src="/hqube_logo.jpeg"
                 alt="hQube Logo" 
                 className="w-10 h-10 rounded-lg"
               />

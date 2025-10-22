@@ -34,6 +34,6 @@ RewriteRule ^ index.html [QSA,L]
 `;
 
 // Write .htaccess file
-fs.writeFileSync(path.join(__dirname, '../../public/.htaccess'), htaccessContent);
+fs.writeFileSync(path.join(__dirname, '../public/.htaccess'), htaccessContent);
 
 console.log('Build configuration files created successfully!');

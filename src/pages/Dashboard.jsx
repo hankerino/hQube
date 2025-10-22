@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { User } from '@/api/entities';
-import { AnalysisRequest } from '@/api/entities';
+import { apiClient } from '@/utils/apiClient';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,11 +20,11 @@ export default function DashboardPage() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const currentUser = await User.me();
+        const { user: currentUser } = await apiClient.getMe();
         setUser(currentUser);
         
         if (currentUser) {
-          const history = await AnalysisRequest.filter({ created_by: currentUser.email }, '-created_date', 10);
+          const { analyses: history } = await apiClient.getAnalyses();
           setAnalysisHistory(history);
         }
       } catch (error) {
@@ -64,7 +63,7 @@ export default function DashboardPage() {
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <h1 className="text-4xl font-bold text-slate-800 mb-2">Welcome back, {user.full_name || 'User'}!</h1>
-          <p className="text-lg text-slate-600">Here's your hQube dashboard.</p>
+          <p className="text-lg text-slate-600">Here&apos;s your hQube dashboard.</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8 mt-8">
@@ -125,7 +124,7 @@ export default function DashboardPage() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-center text-slate-500 py-8">You haven't analyzed any documents yet.</p>
+                    <p className="text-center text-slate-500 py-8">You haven&apos;t analyzed any documents yet.</p>
                   )}
                 </div>
               </CardContent>

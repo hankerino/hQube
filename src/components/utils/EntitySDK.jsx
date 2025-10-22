@@ -21,7 +21,7 @@ export const createEntitySDK = (entityName) => ({
 
   delete: async (id) => {
     const token = localStorage.getItem('auth_token');
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/entities/${entityName}/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/entities/${entityName}/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

@@ -141,7 +141,7 @@ export default function ServiceAdvancedThreatProtectionPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">Cybersecurity Resilience Framework</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Our comprehensive approach follows industry best practices to build, maintain, and improve your organization's cyber resilience across four critical phases.
+              Our comprehensive approach follows industry best practices to build, maintain, and improve your organization&apos;s cyber resilience across four critical phases.
             </p>
           </div>
 
@@ -213,7 +213,7 @@ export default function ServiceAdvancedThreatProtectionPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">Today's Threat Landscape</h2>
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">Today&apos;s Threat Landscape</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
               Understanding the threats your organization faces is the first step in building effective cyber resilience.
             </p>
@@ -251,7 +251,7 @@ export default function ServiceAdvancedThreatProtectionPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <h2 className="text-4xl font-bold mb-4">Build Your Cyber Resilience Today</h2>
             <p className="text-xl text-slate-200 mb-8 max-w-2xl mx-auto">
-              Don't wait for a cyber incident to test your defenses. Start building comprehensive resilience with hQube's advanced threat protection platform.
+              Don&apos;t wait for a cyber incident to test your defenses. Start building comprehensive resilience with hQube&apos;s advanced threat protection platform.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 text-lg font-semibold">

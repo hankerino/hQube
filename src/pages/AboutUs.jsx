@@ -27,7 +27,7 @@ const values = [
   {
     icon: Award,
     title: "Excellence & Innovation",
-    description: "We continuously push the boundaries of what's possible, combining cutting-edge AI with proven cybersecurity practices."
+    description: "We continuously push the boundaries of what&apos;s possible, combining cutting-edge AI with proven cybersecurity practices."
   }
 ];
 
@@ -103,7 +103,7 @@ export default function AboutUsPage() {
             About hQube
           </h1>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            We're on a mission to make enterprise-grade cybersecurity accessible to organizations of all sizes. Through innovative AI-powered solutions and expert guidance, we protect what matters most to your business.
+            We&apos;re on a mission to make enterprise-grade cybersecurity accessible to organizations of all sizes. Through innovative AI-powered solutions and expert guidance, we protect what matters most to your business.
           </p>
         </div>
       </motion.section>
@@ -115,7 +115,7 @@ export default function AboutUsPage() {
             <h2 className="text-4xl font-bold text-slate-900 mb-8">Our Mission</h2>
             <div className="bg-gradient-to-r from-blue-50 to-slate-50 p-8 rounded-2xl">
               <p className="text-2xl text-slate-700 leading-relaxed font-medium">
-                "To democratize cybersecurity by providing intelligent, accessible, and comprehensive protection that scales with your organization's growth."
+                &quot;To democratize cybersecurity by providing intelligent, accessible, and comprehensive protection that scales with your organization&apos;s growth.&quot;
               </p>
             </div>
           </motion.div>
@@ -128,7 +128,7 @@ export default function AboutUsPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">Our Story</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Born from the recognition that cybersecurity shouldn't be a luxury reserved for large enterprises.
+              Born from the recognition that cybersecurity shouldn&apos;t be a luxury reserved for large enterprises.
             </p>
           </div>
 
@@ -137,7 +137,7 @@ export default function AboutUsPage() {
               <h3 className="text-2xl font-bold text-slate-900 mb-6">The Challenge We Saw</h3>
               <div className="space-y-4 text-slate-600 leading-relaxed">
                 <p>
-                  Small and medium enterprises were struggling with the same cyber threats as large corporations, but lacked access to the same level of security expertise and technology. Traditional cybersecurity solutions were either too complex, too expensive, or required dedicated security teams that most organizations couldn't afford.
+                  Small and medium enterprises were struggling with the same cyber threats as large corporations, but lacked access to the same level of security expertise and technology. Traditional cybersecurity solutions were either too complex, too expensive, or required dedicated security teams that most organizations couldn&apos;t afford.
                 </p>
                 <p>
                   At the same time, the cybersecurity landscape was evolving rapidly. AI and machine learning were transforming how threats could be detected and prevented, but these advanced capabilities remained out of reach for most businesses.
@@ -152,7 +152,7 @@ export default function AboutUsPage() {
                   We founded hQube with a clear vision: to bridge this gap by making enterprise-grade cybersecurity accessible, intelligent, and scalable. By combining cutting-edge AI technology with deep cybersecurity expertise, we created solutions that provide the protection of an enterprise security team without the complexity or cost.
                 </p>
                 <p>
-                  Today, we're proud to protect organizations across industries, from small businesses to government agencies, helping them stay secure in an increasingly digital world.
+                  Today, we&apos;re proud to protect organizations across industries, from small businesses to government agencies, helping them stay secure in an increasingly digital world.
                 </p>
               </div>
             </motion.div>
@@ -195,7 +195,7 @@ export default function AboutUsPage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">Our Journey</h2>
-            <p className="text-xl text-slate-600">Key milestones in hQube's evolution.</p>
+            <p className="text-xl text-slate-600">Key milestones in hQube&apos;s evolution.</p>
           </div>
 
           <div className="space-y-12">
@@ -241,7 +241,7 @@ export default function AboutUsPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">Why Choose hQube</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              We're more than a cybersecurity provider—we're your trusted partner in digital transformation.
+              We&apos;re more than a cybersecurity provider—we&apos;re your trusted partner in digital transformation.
             </p>
           </div>
 
@@ -254,7 +254,7 @@ export default function AboutUsPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-600">
-                    Our team brings decades of combined experience from leading enterprise environments, government agencies, and cutting-edge technology companies. We don't just understand the challenges you face; we've actively solved them.
+                    Our team brings decades of combined experience from leading enterprise environments, government agencies, and cutting-edge technology companies. We don&apos;t just understand the challenges you face; we&apos;ve actively solved them.
                   </p>
                 </CardContent>
               </Card>

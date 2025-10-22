@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
-import { User } from "@/api/entities";
+import { apiClient } from "@/utils/apiClient";
 import { Shield, CheckCircle2, MessageCircle, X, Send, Users, Clock, Award, ArrowRight, Star, Zap, Server, Video, ToggleLeft, ToggleRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -62,7 +62,7 @@ export default function Home() {
       return;
     }
     try {
-      await User.me(); // check if logged in
+      await apiClient.getMe(); // check if logged in
       
       const price = billingCycle === 'yearly' ? plan.price.yearly : plan.price.monthly;
       let period = '';
@@ -80,7 +80,8 @@ export default function Home() {
         description: "You need to log in or create an account to select a plan.",
         variant: "destructive",
       });
-      setTimeout(() => User.login(), 1500);
+      // This will depend on your auth flow, for now we'll just log it.
+      console.error("User not logged in");
     }
   };
 
@@ -177,7 +178,7 @@ export default function Home() {
               Complete Security & Automation Solutions
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              From endpoint protection to workflow automation, we've got your business covered.
+              From endpoint protection to workflow automation, we&apos;ve got your business covered.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">

@@ -19,7 +19,7 @@ export const UploadFile = async ({ file }) => {
 
 export const GenerateImage = async ({ prompt }) => {
   const token = localStorage.getItem('auth_token');
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/ai/image`, {
+  const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/ai/image`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const GenerateImage = async ({ prompt }) => {
 
 export const ExtractDataFromUploadedFile = async ({ file_url, json_schema }) => {
   const token = localStorage.getItem('auth_token');
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/ai/extract`, {
+  const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/ai/extract`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import { api } from './ApiClient';
 export const auth = {
   login: async () => {
     // Implement OAuth or redirect to auth provider
-    window.location.href = `${process.env.REACT_APP_API_URL}/auth/login`;
+    window.location.href = `${import.meta.env.VITE_APP_API_URL}/auth/login`;
   },
 
   logout: async () => {

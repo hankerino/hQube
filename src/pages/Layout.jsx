@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { User } from "@/api/entities";
+import { apiClient } from "@/utils/apiClient";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileScan, LogOut, LogIn, Menu, X, Building } from "lucide-react";
 import Footer from "../components/Footer";
@@ -18,7 +18,7 @@ export default function Layout({ children }) {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
-        const currentUser = await User.me();
+        const { user: currentUser } = await apiClient.getMe();
         setUser(currentUser);
       } catch (error) {
         setUser(null);
@@ -30,13 +30,16 @@ export default function Layout({ children }) {
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    await User.logout();
+    await apiClient.logout();
+    localStorage.removeItem('authToken');
     setUser(null);
     navigate(createPageUrl("Home"));
   };
 
   const handleLogin = async () => {
-    await User.login();
+    // This will depend on your auth flow.
+    // For now, we'll navigate to a login page.
+    navigate('/login');
   };
 
   const navLinks = (
@@ -76,7 +79,7 @@ export default function Layout({ children }) {
           <div className="flex items-center justify-between">
             <Link to={createPageUrl("Home")} className="flex items-center space-x-3">
               <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/3f7553f52_correct_hqube_llc_logo.jpeg" 
+                src="/hqube_logo.jpeg"
                 alt="hQube Logo" 
                 className="w-10 h-10 rounded-lg"
               />

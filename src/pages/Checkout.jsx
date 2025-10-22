@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { User } from '@/api/entities';
+import { apiClient } from '@/utils/apiClient';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -57,7 +57,7 @@ export default function CheckoutPage() {
     if (paymentMethod === 'card') {
       try {
         // Simulate API call for card payment
-        await User.updateMyUserData({
+        await apiClient.updateMe({
           subscription_plan: plan.name,
           plan_type: plan.type,
           subscription_status: 'active',
@@ -99,7 +99,7 @@ export default function CheckoutPage() {
       setTimeout(async () => {
         try {
           // In a real app, this would be a callback from the payment gateway
-          await User.updateMyUserData({
+          await apiClient.updateMe({
             subscription_plan: plan.name,
             plan_type: plan.type,
             subscription_status: 'active',

@@ -3,16 +3,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { InvokeLLM, SendEmail } from '@/api/integrations';
-import { User } from '@/api/entities';
-import { SupportTicket } from '@/api/entities'; // Added import for SupportTicket
+import { apiClient } from '@/utils/apiClient';
 import { BrainCircuit, Send, X, Loader2, Mail, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
 
 export default function AIAssistantChat({ isOpen, onClose }) {
   const [messages, setMessages] = useState([
-    { type: 'ai', content: 'Hello! I\'m your AI-powered security assistant. How can I help you with cybersecurity planning, risk assessment, or compliance questions today?' }
+    { type: 'ai', content: 'Hello! I&apos;m your AI-powered security assistant. How can I help you with cybersecurity planning, risk assessment, or compliance questions today?' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -53,8 +51,8 @@ export default function AIAssistantChat({ isOpen, onClose }) {
       
       const history = messages.concat(userMessage).map(m => `${m.type}: ${m.content}`).join('\n');
 
-      const result = await InvokeLLM({
-        prompt: `You are an expert cybersecurity consultant and AI assistant for hQube. Your role is to assist with planning, risk assessment, and compliance. Based on the following conversation history, provide a helpful response.
+      const { result } = await apiClient.invokeLLM(
+        `You are an expert cybersecurity consultant and AI assistant for hQube. Your role is to assist with planning, risk assessment, and compliance. Based on the following conversation history, provide a helpful response.
 
 Conversation History:
 ${history}
@@ -64,8 +62,8 @@ If the user shows strong interest in purchasing or a demo, set action to 'send_e
 Otherwise, set action to 'none'.
 
 Your response must be in JSON format conforming to the provided schema.`,
-        response_json_schema: responseSchema,
-      });
+        responseSchema
+      );
 
       if (result.response) {
         setMessages(prev => [...prev, { type: 'ai', content: result.response }]);
@@ -73,11 +71,9 @@ Your response must be in JSON format conforming to the provided schema.`,
 
       if (result.action === 'send_email_to_sales') {
         try {
-          const user = await User.me();
           const transcript = messages.concat(userMessage).map(m => `${m.type}: ${m.content}`).join('\n');
           
-          await SupportTicket.create({
-            user_email: user.email,
+          await apiClient.createTicket({
             request_type: "Sales Inquiry",
             details: `A user has shown high interest in our services. Please follow up.\n\nTranscript:\n${transcript}`
           });
@@ -94,10 +90,10 @@ Your response must be in JSON format conforming to the provided schema.`,
       console.error("AI Assistant Error:", error);
       toast({
         title: "AI Assistant Error",
-        description: "Sorry, I'm having trouble responding right now. Please try again.",
+        description: "Sorry, I&apos;m having trouble responding right now. Please try again.",
         variant: "destructive"
       });
-      setMessages(prev => [...prev, { type: 'ai', content: 'I apologize, but I\'m experiencing technical difficulties. Please try asking your question again, or contact our support team for immediate assistance.' }]);
+      setMessages(prev => [...prev, { type: 'ai', content: 'I apologize, but I&apos;m experiencing technical difficulties. Please try asking your question again, or contact our support team for immediate assistance.' }]);
     } finally {
       setIsLoading(false);
     }
@@ -105,20 +101,19 @@ Your response must be in JSON format conforming to the provided schema.`,
   
   const handleEndChat = async () => {
     try {
-      const user = await User.me();
+      const { user } = await apiClient.getMe();
       const transcript = messages.map(m => `[${m.type.toUpperCase()}] ${m.content}`).join('\n\n');
       
       // Send transcript to user
-      await SendEmail({
-          to: user.email,
-          from_name: "hQube AI Assistant",
-          subject: "Your hQube AI Chat Transcript",
-          body: `Hello,\n\nHere is the transcript of your recent chat with the hQube AI Security Assistant.\n\n---\n\n${transcript}\n\n---\n\nIf you have any further questions, please don't hesitate to contact us.`,
-      });
+      await apiClient.sendEmail(
+          user.email,
+          "Your hQube AI Chat Transcript",
+          `Hello,\n\nHere is the transcript of your recent chat with the hQube AI Security Assistant.\n\n---\n\n${transcript}\n\n---\n\nIf you have any further questions, please don't hesitate to contact us.`,
+          "hQube AI Assistant"
+      );
 
       // Create a log ticket for the support team
-      await SupportTicket.create({
-        user_email: user.email,
+      await apiClient.createTicket({
         request_type: "Chat Transcript Log",
         details: `AI Chat session ended.\n\nTranscript:\n\n${transcript}`,
         status: "closed"
@@ -128,23 +123,22 @@ Your response must be in JSON format conforming to the provided schema.`,
       onClose();
     } catch (error) {
        toast({ title: "Login Required", description: "Please log in to email a transcript.", variant: "destructive" });
-       await User.login();
+       // This will depend on your auth flow, for now we'll just log it.
+       console.error("User not logged in");
     }
   };
 
   const handleHandoff = async () => {
     try {
-      const user = await User.me();
       const transcript = messages.map(m => `[${m.type.toUpperCase()}] ${m.content}`).join('\n\n');
       
       // Create a support ticket instead of sending an email
-      await SupportTicket.create({
-        user_email: user.email,
+      await apiClient.createTicket({
         request_type: "Live Agent Handoff",
         details: `User requested to speak with a live agent.\n\nConversation history:\n\n${transcript}`
       });
 
-      setMessages(prev => [...prev, { type: 'ai', content: "I've created a ticket for our support team. A live agent will reach out to you shortly via email or our live chat system. You can also contact us directly at support@hqube.co for immediate assistance." }]);
+      setMessages(prev => [...prev, { type: 'ai', content: "I&apos;ve created a ticket for our support team. A live agent will reach out to you shortly via email or our live chat system. You can also contact us directly at support@hqube.co for immediate assistance." }]);
       
       toast({ 
         title: "Live Agent Requested", 
@@ -153,7 +147,7 @@ Your response must be in JSON format conforming to the provided schema.`,
       });
     } catch (error) {
       console.error("Failed to create live agent ticket:", error);
-      setMessages(prev => [...prev, { type: 'ai', content: "I'm having trouble connecting you right now. Please contact our support team directly at support@hqube.co or try again later." }]);
+      setMessages(prev => [...prev, { type: 'ai', content: "I&apos;m having trouble connecting you right now. Please contact our support team directly at support@hqube.co or try again later." }]);
       toast({ 
         title: "Connection Error", 
         description: "Please contact support@hqube.co directly for assistance.",

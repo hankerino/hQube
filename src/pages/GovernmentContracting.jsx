@@ -12,8 +12,7 @@ import { motion } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { User } from '@/api/entities'; // New import
-import { SupportTicket } from '@/api/entities'; // New import
+import { apiClient } from '@/utils/apiClient';
 
 const capabilities = [
   { icon: Shield, title: "FedRAMP Ready", description: "Our cybersecurity solutions are designed to meet federal security standards and compliance requirements." },
@@ -154,19 +153,19 @@ export default function GovernmentContractingPage() {
   const handleSecureAction = async (actionType) => {
     try {
       // Check if user is logged in before proceeding with secure action
-      await User.me();
+      await apiClient.getMe();
       setMfaAction(actionType);
       setShowMFA(true);
     } catch(e) {
       toast({title: "Login Required", description: "You must be logged in to perform this secure action.", variant: "destructive"})
-      // Redirect to login or open login modal
-      User.login();
+      // This will depend on your auth flow, for now we'll just log it.
+      console.error("User not logged in");
     }
   };
 
-  const createTicket = async (user_email, request_type, details) => {
+  const createTicket = async (request_type, details) => {
     try {
-      await SupportTicket.create({ user_email, request_type, details });
+      await apiClient.createTicket({ request_type, details });
     } catch (e) {
       console.error("Failed to create support ticket", e);
       toast({
@@ -178,7 +177,7 @@ export default function GovernmentContractingPage() {
   };
 
   const handleMFASuccess = async () => {
-    const user = await User.me(); // Get current user's email for the ticket
+    const { user } = await apiClient.getMe(); // Get current user's email for the ticket
     if (!user || !user.email) {
       toast({
         title: "Error",

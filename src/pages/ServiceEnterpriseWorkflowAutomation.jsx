@@ -104,7 +104,7 @@ export default function ServiceEnterpriseWorkflowAutomationPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">Comprehensive Automation Solutions</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Our platform combines ServiceNow's powerful automation capabilities with expert implementation and ongoing support.
+              Our platform combines ServiceNow&apos;s powerful automation capabilities with expert implementation and ongoing support.
             </p>
           </div>
 
@@ -215,7 +215,7 @@ export default function ServiceEnterpriseWorkflowAutomationPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <h2 className="text-4xl font-bold mb-4">Ready to Transform Your Operations?</h2>
             <p className="text-xl text-teal-100 mb-8 max-w-2xl mx-auto">
-              Partner with hQube to implement enterprise workflow automation that scales with your organization's growth and security requirements.
+              Partner with hQube to implement enterprise workflow automation that scales with your organization&apos;s growth and security requirements.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" className="bg-white text-teal-700 hover:bg-teal-100 px-8 py-4 text-lg font-semibold">

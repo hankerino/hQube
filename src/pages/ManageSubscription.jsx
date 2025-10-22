@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { User } from '@/api/entities';
+import { apiClient } from '@/utils/apiClient';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -32,7 +32,7 @@ export default function ManageSubscriptionPage() {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
-        const currentUser = await User.me();
+        const { user: currentUser } = await apiClient.getMe();
         setUser(currentUser);
       } catch (error) {
         navigate(createPageUrl('Home'));
@@ -45,7 +45,7 @@ export default function ManageSubscriptionPage() {
   const handleCancelSubscription = async () => {
     setIsCancelling(true);
     try {
-      await User.updateMyUserData({
+      await apiClient.updateMe({
         subscription_plan: 'None',
         plan_type: 'none',
         subscription_status: 'cancelled',
@@ -56,7 +56,7 @@ export default function ManageSubscriptionPage() {
         description: "Your hQube subscription has been successfully cancelled.",
       });
       // Refetch user data to update UI
-      const updatedUser = await User.me();
+      const { user: updatedUser } = await apiClient.getMe();
       setUser(updatedUser);
     } catch (error) {
       toast({
