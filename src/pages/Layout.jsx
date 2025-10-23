@@ -6,11 +6,13 @@ import { apiClient } from "@/utils/apiClient";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileScan, LogOut, LogIn, Menu, X, Building } from "lucide-react";
 import Footer from "../components/Footer";
+import AuthModal from "../components/AuthModal";
 
 export default function Layout({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,10 +38,8 @@ export default function Layout({ children }) {
     navigate(createPageUrl("Home"));
   };
 
-  const handleLogin = async () => {
-    // This will depend on your auth flow.
-    // For now, we'll navigate to a login page.
-    navigate('/login');
+  const handleLogin = () => {
+    setShowAuthModal(true);
   };
 
   const navLinks = (
@@ -64,7 +64,7 @@ export default function Layout({ children }) {
           <Button onClick={handleLogin} variant="ghost" className="text-white hover:bg-slate-600 hover:text-white w-full justify-start md:w-auto">
             <LogIn className="w-4 h-4 mr-2" /> Login
           </Button>
-          <Button onClick={handleLogin} className="bg-teal-600 hover:bg-teal-700 text-white font-semibold w-full md:w-auto">
+          <Button data-testid="signup-button" onClick={handleLogin} className="bg-teal-600 hover:bg-teal-700 text-white font-semibold w-full md:w-auto">
             Sign Up
           </Button>
         </>
@@ -102,6 +102,7 @@ export default function Layout({ children }) {
         </div>
       </header>
       <main className="flex-grow">{children}</main>
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
       <Footer />
     </div>
   );

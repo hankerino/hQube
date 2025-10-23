@@ -285,7 +285,7 @@ export default function Home() {
                             <li key={featureIndex} className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" /><span className="text-slate-700 text-sm leading-relaxed">{feature}</span></li>
                           ))}
                         </ul>
-                        <Button onClick={() => handleSelectPlan(plan)} className={`w-full mt-6 font-semibold py-3 ${plan.popular ? 'bg-amber-600 hover:bg-amber-700 text-white' : 'bg-white hover:bg-slate-50 text-slate-900 border border-slate-300'}`}>{plan.name === "Enterprise" ? "Contact Us" : "Select Plan"}</Button>
+                        <Button data-testid={`select-plan-${plan.name}`} onClick={() => handleSelectPlan(plan)} className={`w-full mt-6 font-semibold py-3 ${plan.popular ? 'bg-amber-600 hover:bg-amber-700 text-white' : 'bg-white hover:bg-slate-50 text-slate-900 border border-slate-300'}`}>{plan.name === "Enterprise" ? "Contact Us" : "Select Plan"}</Button>
                       </CardContent>
                     </Card>
                   </motion.div>
