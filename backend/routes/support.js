@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/database');
+const { pool } = require('../config/db');
 const verifyToken = require('../middleware/auth');
 
 router.post('/tickets', verifyToken, async (req, res) => {
   try {
     const { request_type, details } = req.body;
-    const { rows } = await db.query(
+    const { rows } = await pool.query(
       'INSERT INTO support_tickets (user_email, request_type, details, status, created_by) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [req.user.email, request_type, details, 'new', req.user.userId]
     );
@@ -18,7 +18,7 @@ router.post('/tickets', verifyToken, async (req, res) => {
 
 router.get('/tickets', verifyToken, async (req, res) => {
   try {
-    const { rows } = await db.query(
+    const { rows } = await pool.query(
       'SELECT * FROM support_tickets WHERE created_by = $1 ORDER BY created_date DESC',
       [req.user.userId]
     );

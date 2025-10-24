@@ -4,7 +4,7 @@
 export const layoutCode = `import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { User } from "@/api/entities";
+import apiClient from "@/utils/apiClient";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileScan, LogOut, LogIn, Menu, X, Building } from "lucide-react";
 import Footer from "./components/Footer";
@@ -20,7 +20,7 @@ export default function Layout({ children }) {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
-        const currentUser = await User.me();
+        const currentUser = await apiClient.getProfile();
         setUser(currentUser);
       } catch (error) {
         setUser(null);
@@ -32,13 +32,13 @@ export default function Layout({ children }) {
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    await User.logout();
+    await apiClient.logout();
     setUser(null);
     navigate(createPageUrl("Home"));
   };
 
   const handleLogin = async () => {
-    await User.login();
+    await apiClient.login();
   };
 
   const navLinks = (
@@ -78,7 +78,7 @@ export default function Layout({ children }) {
           <div className="flex items-center justify-between">
             <Link to={createPageUrl("Home")} className="flex items-center space-x-3">
               <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/3f7553f52_correct_hqube_llc_logo.jpeg" 
+                src="/hqube_logo.jpeg"
                 alt="hQube Logo" 
                 className="w-10 h-10 rounded-lg"
               />
@@ -148,7 +148,7 @@ export default function CompleteCodeExport() {
           <ol className="list-decimal list-inside space-y-2 text-slate-700">
             <li>Create new React project: <code className="bg-slate-100 px-2 py-1 rounded">npx create-react-app hqube-website</code></li>
             <li>Install dependencies: <code className="bg-slate-100 px-2 py-1 rounded">npm install lucide-react framer-motion date-fns lodash</code></li>
-            <li>Copy all page files from this base44 project to your src/ folder</li>
+            <li>Copy all page files from this project to your src/ folder</li>
             <li>Set up your backend (Supabase recommended)</li>
             <li>Build: <code className="bg-slate-100 px-2 py-1 rounded">npm run build</code></li>
             <li>Deploy to Hostinger and point www.hqube.co to your app</li>
@@ -189,7 +189,7 @@ export default function CompleteCodeExport() {
 
         <div className="mt-6 p-4 bg-gradient-to-r from-teal-50 to-slate-50 border border-teal-200 rounded-lg">
           <p className="text-sm text-slate-700">
-            <strong>💡 Next Step:</strong> All your pages, components, and entities are already built in this base44 project. 
+            <strong>💡 Next Step:</strong> All your pages, components, and entities are already built in this project.
             You can copy them directly to create your standalone React app for deployment to Hostinger.
           </p>
         </div>

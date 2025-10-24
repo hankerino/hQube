@@ -11,7 +11,7 @@ export const COMPLETE_FRONTEND_CODE = {
 LAYOUT: `import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { User } from "@/api/entities";
+import apiClient from "@/utils/apiClient";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileScan, LogOut, LogIn, Menu, X, Building } from "lucide-react";
 import Footer from "./components/Footer";
@@ -27,7 +27,7 @@ export default function Layout({ children }) {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
-        const currentUser = await User.me();
+        const currentUser = await apiClient.getProfile();
         setUser(currentUser);
       } catch (error) {
         setUser(null);
@@ -39,13 +39,13 @@ export default function Layout({ children }) {
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    await User.logout();
+    await apiClient.logout();
     setUser(null);
     navigate(createPageUrl("Home"));
   };
 
   const handleLogin = async () => {
-    await User.login();
+    await apiClient.login();
   };
 
   const navLinks = (
@@ -85,7 +85,7 @@ export default function Layout({ children }) {
           <div className="flex items-center justify-between">
             <Link to={createPageUrl("Home")} className="flex items-center space-x-3">
               <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/3f7553f52_correct_hqube_llc_logo.jpeg" 
+                src="/hqube_logo.jpeg"
                 alt="hQube Logo" 
                 className="w-10 h-10 rounded-lg"
               />
@@ -166,7 +166,7 @@ GLOBALS_CSS: `/* Base Tailwind CSS imports */
 // ===== PAGES =====
 PAGES: {
   HOME: `import React, { useState, useRef, useEffect } from "react";
-import { User } from "@/api/entities";
+import apiClient from "@/utils/apiClient";
 import { Shield, CheckCircle2, MessageCircle, X, Send, Users, Clock, Award, ArrowRight, Star, Zap, Server, Video, ToggleLeft, ToggleRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -228,7 +228,7 @@ export default function Home() {
       return;
     }
     try {
-      await User.me();
+      await apiClient.getProfile();
       
       const price = billingCycle === 'yearly' ? plan.price.yearly : plan.price.monthly;
       let period = '';
@@ -246,7 +246,7 @@ export default function Home() {
         description: "You need to log in or create an account to select a plan.",
         variant: "destructive",
       });
-      setTimeout(() => User.login(), 1500);
+      setTimeout(() => apiClient.login(), 1500);
     }
   };
 
@@ -576,7 +576,7 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <Link to={createPageUrl("Home")} className="flex items-center space-x-3 mb-4">
               <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/3f7553f52_correct_hqube_llc_logo.jpeg" 
+                src="/hqube_logo.jpeg"
                 alt="hQube Logo" 
                 className="w-10 h-10 rounded-lg"
               />

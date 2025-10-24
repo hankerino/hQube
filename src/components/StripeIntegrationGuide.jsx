@@ -117,7 +117,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import StripePaymentForm from '../components/StripePaymentForm';
-import { User } from '@/api/entities';
+import apiClient from '@/utils/apiClient';
 
 export default function CheckoutPage() {
   const [plan, setPlan] = useState(null);
@@ -139,7 +139,7 @@ export default function CheckoutPage() {
 
       if (response.ok) {
         // Update local user data
-        await User.updateMyUserData({
+        await apiClient.updateProfile({
           subscription_plan: plan.name,
           subscription_status: 'active',
           plan_type: plan.type

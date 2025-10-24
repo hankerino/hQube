@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { pool: db } = require('../config/db');
+const { pool } = require('../config/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -12,7 +12,7 @@ router.post('/signup', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const { rows } = await db.query(
+    const { rows } = await pool.query(
       'INSERT INTO users (email, password, full_name) VALUES ($1, $2, $3) RETURNING id, email, full_name',
       [email, hashedPassword, full_name]
     );
@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [
+    const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [
       email,
     ]);
     const user = rows[0];
